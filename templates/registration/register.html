@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create an account{% endblock title %}
+
+{% block content %}
+    {% if form %}
+        <h1>Create account</h1>
+        <div class="mb-3 row">
+            <div class="col-sm-10">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-success">Register</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <h2>You are not logged out of your account. Are you sure you want to
+            <a class="btn btn-danger" herf="{% url 'logout' %}">logout</a>
+        </h2>
+    {% endif %}
+{% endblock content %}
+

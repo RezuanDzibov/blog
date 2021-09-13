@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load article_tags %}
+
+{% block title %}{{ object.title }}{% endblock title %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Post content-->
+                <article>
+                    <!-- Post header-->
+                    <header class="mb-4">
+                        <!-- Post title-->
+                        <h1 class="fw-bolder mb-1">{{ article.title }}</h1>
+                        <!-- Post meta content-->
+                        <div class="text-muted fst-italic mb-2">Posted at {{ article.published|date:"f a l F Y" }}</div>
+                        <!-- Post categories-->
+                        {% for article_tag in article.tags.all  %}
+                            <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'blog:articles_by_tag' article_tag.slug %}">#{{ article_tag.name }}</a>
+                        {% endfor %}
+                        <hr>
+                        <div class="card w-75">
+                            <div class="card-body">
+                              <h5 class="card-title">Author: <a href="{% url 'user_account:profile' article.authors.username %}">{{ article.authors.get_full_name }}</a></h5>
+                              <a href="{% url 'blog:articles_by_user' article.authors.username %}" class="btn btn-primary">Author articles -></a>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Category: {{ article.category.name }}</h5>
+                                <a href="{% url 'blog:articles_by_category' article.category.slug %}" class="btn btn-primary">Category articles -></a>
+                            </div>
+                        </div>
+                    </header>
+                    <!-- Preview image figure-->
+                    <figure class="mb-4">
+                        {% thumbnail article.image "1000x500" as image %}
+                            <img src="{{ image.url }}">
+                        {% endthumbnail %}
+                    </figure>
+                    <!-- Post content-->
+                    <section class="mb-5">
+                        <p class="fs-5">{{ article.text_body|safe }}</p>
+                    </section>
+                </article>
+                <!-- Comments section-->
+                <section class="mb-5">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <!-- Comment form-->
+                            <form class="mb-4" method="post" action="{% url 'blog:add_comment' article.slug %}">
+                                {% csrf_token %}
+                                {{ comment_form.as_p }}
+                                <input class="btn btn-success" type="submit" value="comment">
+                            </form>
+                            <!-- Comment with nested comments-->
+                            {% for comment in article.get_last_five_comments %}
+                                <div class="d-flex mb-4">
+                                    <!-- Parent comment-->
+                                    <div class="flex-shrink-0">
+                                        {% thumbnail comment.author.avatar "50x50" crop="center" as avatar %}
+                                            <img src="{{ avatar.url }}">
+                                        {% endthumbnail %}
+                                    </div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold">{{ comment.author }}</div>
+                                        {{ comment.text_body }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+            {% include 'components/nav.html' %}
+        </div>
+    </div>
+    {% if request.user == article.authors %}
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <a href="{% url 'blog:delete_article_confirm' article.pk %}"><button type="button" class="btn btn-danger">Delete</button></a>
+        <a href="{% url 'blog:article_edit' article.pk %}"><button type="button" class="btn btn-primary">Edit</button></a>
+    </div>
+    {% endif %} 
+{% endblock content %}
+

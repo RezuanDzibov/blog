@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load user_account_tags %}
+
+{% block title %}
+	{% if section is not None %}
+		My profile
+	{% else %}
+		{% if user_profile.user.get_full_name %}
+			{{ user_profile.user.get_full_name }}
+		{% else %}
+			{{ user_profile.user.username }}
+		{% endif %}
+	{% endif %}
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+	<div class="main-body">
+		<div class="row gutters-sm">
+			<div class="col-md-4 mb-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex flex-column align-items-center text-center">
+							{% if user_profile.avatar %}
+								<!-- <img src="{{ user_profile.avatar.url }}" class="img-thumbnail"> -->
+								{% thumbnail user_profile.avatar "270x270" as im %}
+									<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+								{% endthumbnail %}
+							{% else %}
+								<img src="{% static 'images/none.png' %}" width="270" height="270">
+							{% endif %}
+							<div class="mt-3">
+								<h4>
+									{% if user_profile.user.get_full_name %}
+										{{ user_profile.user.get_full_name }}
+									{% else %}
+										user_profile.user.username }}
+									{% endif %}
+								</h4>
+								<p class="text-secondary mb-1">{{ user_profile.bio }}</p>
+							</div>
+							<h3>Email</h3>
+								{{ user_profile.user.email }}
+							<hr>
+						</div>
+					</div>
+				</div>
+				<br>
+				{% if request.user == user_profile.user %}
+					<div class="card">
+						<a href="{% url 'user_account:update_profile' request.user.username %}" class="btn btn-primary">Edit</a>
+						<br>
+						<a href="{% url 'password_change' %}" class="btn btn-primary">Change password</a>
+					</div>
+				{% endif %}
+				<div class="card mt-3">
+					<ul class="list-group list-group-flush">
+						{% get_link user_profile 'pers_website' as link %}
+							{% if link != False %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/ios-filled/30/000000/domain.png"/>Website</h6>
+									<span class="text-secondary">{{ link }}</span>	
+								</li>	
+								<a class="btn btn-danger">Delete link</a>	
+							{% else %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/ios-filled/30/000000/domain.png"/>Website</h6>
+								</li>
+								{% if request.user == user_profile.user %}
+										<a class="btn btn-primary" href="{% url 'user_account:add_soc_net_link' 'pers_website' %}">Add link</a>
+								{% endif %}
+							{% endif %}
+						{% get_link user_profile 'mail' as link %}
+							{% if link != False %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/fluency/30/000000/apple-mail.png"/>/>Mail</h6>
+									<span class="text-secondary">{{ link }}</span>	
+								</li>	
+								<a class="btn btn-danger">Delete link</a>	
+							{% else %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/fluency/30/000000/apple-mail.png"/>Mail</h6>
+								</li>
+								{% if request.user == user_profile.user %}
+										<a class="btn btn-primary" href="{% url 'user_account:add_soc_net_link' 'mail' %}">Add link</a>
+								{% endif %}
+							{% endif %}
+						{% get_link user_profile 'telegram' as link %}
+							{% if link != False %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/telegram-app--v3.png"/>Telegram</h6>
+									<span class="text-secondary">{{ link }}</span>
+								</li>
+								<a class="btn btn-danger">Delete link</a>
+							{% else %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/telegram-app--v3.png"/>Telegram</h6>
+								</li>
+								{% if request.user == user_profile.user %}
+										<a class="btn btn-primary" href="{% url 'user_account:add_soc_net_link' 'telegram' %}">Add link</a>
+								{% endif %}
+							{% endif %}
+						{% get_link user_profile 'git' as link %}
+							{% if link != False %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/windows/30/000000/github.png"/>Github</h6>
+									<span class="text-secondary">{{ link }}</span>
+								</li>
+								<a class="btn btn-danger">Delete link</a>
+							{% else %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/windows/30/000000/github.png"/>GitHub</h6>
+								</li>
+								{% if request.user == user_profile.user %}
+										<a class="btn btn-primary" href="{% url 'user_account:add_soc_net_link' 'git' %}">Add link</a>
+								{% endif %}
+							{% endif %}
+						{% get_link user_profile 'linkin' as link %}
+							{% if link != False %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/linkedin.png"/>LinkedIn</h6>
+									<span class="text-secondary">{{ link }}</span>
+								</li>
+								<a class="btn btn-danger">Delete link</a>
+							{% else %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/linkedin.png"/>LinkedIn</h6>
+								</li>
+								{% if request.user == user_profile.user %}
+										<a class="btn btn-primary" href="{% url 'user_account:add_soc_net_link' 'linkin' %}">Add link</a>
+								{% endif %}
+							{% endif %}
+						{% get_link user_profile 'twitter' as link %}
+							{% if link != False %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/twitter--v1.png"/>Twitter</h6>
+									<span class="text-secondary">{{ link }}</span>
+								</li>
+								<a class="btn btn-danger">Delete link</a>
+							{% else %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/twitter--v1.png"/>Twitter</h6>
+								</li>
+								{% if request.user == user_profile.user %}
+										<a class="btn btn-primary" href="{% url 'user_account:add_soc_net_link' 'twitter' %}">Add link</a>
+								{% endif %}
+							{% endif %}
+						{% get_link user_profile 'insta' as link %}
+							{% if link != False %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/fluency/30/000000/instagram-new.png"/>Instagram</h6>
+									<span class="text-secondary">{{ link }}</span>
+								</li>
+								<a class="btn btn-danger">Delete link</a>
+							{% else %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/fluency/30/000000/instagram-new.png"/>Instagram</h6>
+								</li>
+								{% if request.user == user_profile.user %}
+										<a class="btn btn-primary" href="{% url 'user_account:add_soc_net_link' 'insta' %}">Add link</a>
+								{% endif %}
+							{% endif %}
+						{% get_link user_profile 'facebook' as link %}
+							{% if link != False %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/facebook.png"/>Facebook</h6>
+									<span class="text-secondary">{{ link }}</span>
+								</li>
+								<a class="btn btn-danger">Delete link</a>
+							{% else %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/facebook.png"/>Facebook</h6>
+								</li>
+								{% if request.user == user_profile.user %}
+										<a class="btn btn-primary" href="{% url 'user_account:add_soc_net_link' 'facebook' %}">Add link</a>
+								{% endif %}
+							{% endif %}
+						{% get_link user_profile 'vk' as link %}
+							{% if link != False %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/vk-com.png"/>VKontakte</h6>
+									<span class="text-secondary">{{ link }}</span>
+								</li>
+								<a class="btn btn-danger">Delete link</a>
+							{% else %}
+								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/vk-com.png"/>VKontakte</h6>
+								</li>
+								{% if request.user == user_profile.user %}
+										<a class="btn btn-primary" href="{% url 'user_account:add_soc_net_link' 'vk' %}">Add link</a>
+								{% endif %}
+							{% endif %}
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="card mb-3">
+				</div>
+				<h3>Last articles</h3>
+				<div class="card-group">
+					{% for article in last_two_articles %}
+					<div class="col-lg-6">
+						<div class="card mb-4">
+							<a href="{{ article.get_absolute_url }}"><img class="card-img-top"
+									src="{{ article.image.url }}"></a>
+							<div class="card-body">
+								<div class="small text-muted">{{ article.published|date:"f a l F Y" }}</div>
+								<h2 class="card-title h4">{{ article.title }}</h2>
+								<p class="card-text">{{ article.text_body|truncatewords:30|safe }}</p>
+								<a class="btn btn-primary" href="{{ article.get_absolute_url }}">Read more →</a>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				{% if request.user.username == user_profile.user.username %}
+					<a href="{% url 'blog:articles_by_current_user' %}" class="btn btn-outline-primary">All my articles</a>
+					<a href="{% url 'blog:create_article' %}" class="btn btn-success">Create new article</a>
+				{% else %}
+					<a href="{% url 'blog:articles_by_user' user_profile.user.username %}" class="btn btn-outline-primary">All author articles</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

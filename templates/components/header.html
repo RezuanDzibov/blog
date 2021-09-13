@@ -1,0 +1,33 @@
+<main>
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                  <h4><a class="nav-link px-2 text-white" href="{% url 'blog:article_list' %}">My blog</a></h4>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    {% if request.user.is_authenticated %}
+                        <h5><li><a {% if section == 'my_profile' %}class="nav-link px-2 text-white" {% else %}class="nav-link px-2 text-secondary"
+                            {% endif %} href="{% url 'user_account:profile' request.user.username %}">My profile</a></li></h5>
+                    {% else %}
+                        <h5><li><a href="{% url 'signin' %}" class="nav-link px-2 text-secondary">My profile</a></li></h5>
+                    {% endif %}
+                    <h5><li><a {% if section == 'users' %}class="nav-link px-2 text-white" {% else %}class="nav-link px-2 text-secondary"
+                        {% endif %} href="{% url 'user_account:profiles' %}" class="nav-link px-2 text-secondary">Users</a></li></h5>
+                    <h5><li><a href="#" class="nav-link px-2 text-secondary">About and Contact me</a></li></h5>
+                </ul>
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="get" action="{% url 'blog:article_search' %}">
+                    <input type="" class="form-control" placeholder="Search articles" aria-label="Search" name="q">
+                </form>
+                <div class="text-end">
+                    {% if section != 'login' %}
+                        {% if request.user.is_authenticated %}
+                            <a class="btn btn-warning" href="{% url 'logout' %}">SignOut</a>
+                        {% else %}
+                            <a class="btn btn-success" href="{% url 'signin' %}">SignIn</a>
+                            <a href="{% url 'signup' %}" class="btn btn-warning">SignUp</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+</main>

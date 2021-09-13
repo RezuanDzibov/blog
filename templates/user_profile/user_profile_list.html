@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load static %}
+
+{% block title %}My Blog{% endblock title %}
+
+{% block content %}
+   
+    <main>
+        <br>
+        <br>
+        <form method="get" action="{% url 'user_account:search_user' %}">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search users" aria-describedby="button-addon2" name="q">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            </div>
+        </form>
+        <div class="album py-5 bg-light">
+            <div class="container">
+                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% for user_profile in user_profiles %}
+                        <div class="card" style="width: 18rem;">
+                            {% if user_profile.avatar %}
+                                <a href="{% url 'user_account:profile' user_profile.user.username %}">
+                                    <img src="{{ user_profile.avatar.url }}">
+                                </a>
+                            {% else %}
+                                <a href="{% url 'user_account:profile' user_profile.user.username %}"><img src="{% static 'images/avatar.png' %}"></a>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {% if user_profile.user.get_full_name %}
+                                        {{ user_profile.user.get_full_name }}
+                                    {% else %}
+                                        {{ user_profile.user.username }}
+                                    {% endif %}
+                                </h5>
+                                {% if user_profile.bio %}
+                                    <p class="card-text">{{ user_profile.bio }}</p>
+                                {% endif %}
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">{{ user_profile.user.email }}</li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="{% url 'user_account:profile' user_profile.user.username %}" class="btn btn-outline-primary">view</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <br>
+                <br>
+                {% include 'components/pagination.html' %}
+            </div>
+        </div> 
+ 
+    </main>
+{% endblock content %}
+    

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete {{ article }}{% endblock title %}
+
+{% block content %}
+	<form method="post">
+		{% csrf_token %}
+		<p>Are you sure you want to delete "{{ article.title }}"?</p>
+		<input class="btn btn-danger" type="submit" value="Delete">
+		<a class="btn btn-success" href="{{ article.get_absolute_url }}">Cancel</a>
+	</form>
+{% endblock content %}

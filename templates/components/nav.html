@@ -1,0 +1,24 @@
+{% load article_tags %}
+{% get_categories as categories %}
+<div class="col-lg-4">
+    <br>
+    <div class="card mb-4">
+        <div class="card-header">Categories</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul class="list-unstyled mb-0">
+                        {% for category in categories %}
+                            <li><a href="{% url 'blog:articles_by_category' category.slug %}">{{ category.name|title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Side widget-->
+    <div class="card mb-4">
+        <div class="card-header">Welcome My Blog</div>
+        <div class="card-body">Welcome to My Blog, my first site to showcase my capabilities.</div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+
+{% block title %}My Blog{% endblock title %}
+
+{% block content %}
+    {% if articles %}
+            {% if current_category %}
+                <h1>Article by category: {{ current_category.name }}</h1>
+            {% elif author %}
+                <h1>Articles by: {{ author }}</h1>
+            {% elif tag %}
+                <h1>Articles with tag: #{{ tag.name }}</h1>
+            {% elif current_author %}
+                {% if not articles %}
+                    <h1>Your haven't articles.Create article <a href="{% url 'blog:create_article' %}"><button type="button"
+                        class="btn btn-success">Create</button></a></h1>
+                {% else %}
+                    <h1>Your posts</h1>
+                {% endif %}
+            {% endif %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                    </div>
+                    <div class="card-group">
+                        {% for article in articles %}
+                            <div class="col-lg-6">
+                                <div class="card mb-4">
+                                    {% if article.image %}
+                                        <a href="{{ article.get_absolute_url }}"><img class="card-img-top"
+                                            src="{{ article.image.url }}"></a>
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <div class="small text-muted">{{ article.published|date:"f a l F Y" }}</div>
+                                        <h2 class="card-title h4">{{ article.title }}</h2>
+                                        <p class="card-text">{{ article.text_body|truncatewords:30|safe }}</p>
+                                        <a class="btn btn-primary" href="{{ article.get_absolute_url }}">Read more →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% include 'components/pagination.html' %}
+                </div>
+                
+                {% include 'components/nav.html' %}
+            </div>
+        </div>
+    {% else %}
+        <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">Not have articles</h1>
+                </div>
+            </div>
+        </header>
+    {% endif %}
+{% endblock content %}
