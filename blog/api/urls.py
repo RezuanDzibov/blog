@@ -1,10 +1,16 @@
-from django.urls import path
 from . import views
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.urls import path
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register("articles", views.ArticleViewSet)
+router.register("comments", views.CommentViewSet)
+
 
 urlpatterns = [
-    path('articles/', views.ArticleList.as_view()),
-    path('article/<slug:slug>/', views.ArticleDetail.as_view()),
+    path("articles_by_you/", views.ArticlesByYou.as_view()),
+    
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+
+urlpatterns += router.urls

@@ -8,27 +8,27 @@ class BlogAdminForm(forms.ModelForm):
     text_body = forms.CharField(widget=CKEditorUploadingWidget())
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = "__all__"
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):    
-    list_display = ['name']
-    list_display_links = ['name']
-    prepopulated_fields = {'slug': ('name',)}
+    list_display = ("name",)
+    list_display_links = ("name",)
+    prepopulated_fields = {"slug": ("name",)}
 
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'authors', 'slug', 'created', 'published', 'active']
-    list_display_links = ['title', 'category', 'authors']
-    list_editable = ['active']
-    prepopulated_fields = {'slug': ('title',)}
+    list_display = ("title", "category", "author", "slug", "created", "published", "active")
+    list_display_links = ("title", "category", "author")
+    list_editable = ("active",)
+    prepopulated_fields = {"slug": ("title",)}
     form = BlogAdminForm
 
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['article', 'author', 'created', 'updated', 'status']
-    list_display_links = ['article', 'author']
-    list_editable = ['status']
+    list_display = ("article", "author", "created", "status")
+    list_display_links = ("article", "author")
+    list_editable = ("status",)

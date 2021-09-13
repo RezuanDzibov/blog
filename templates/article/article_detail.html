@@ -23,8 +23,8 @@
                         <hr>
                         <div class="card w-75">
                             <div class="card-body">
-                              <h5 class="card-title">Author: <a href="{% url 'user_account:profile' article.authors.username %}">{{ article.authors.get_full_name }}</a></h5>
-                              <a href="{% url 'blog:articles_by_user' article.authors.username %}" class="btn btn-primary">Author articles -></a>
+                              <h5 class="card-title">Author: <a href="{% url 'user_account:profile' article.author.username %}">{{ article.author.get_full_name }}</a></h5>
+                              <a href="{% url 'blog:articles_by_user' article.author.username %}" class="btn btn-primary">Author articles -></a>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Category: {{ article.category.name }}</h5>
@@ -58,7 +58,7 @@
                                 <div class="d-flex mb-4">
                                     <!-- Parent comment-->
                                     <div class="flex-shrink-0">
-                                        {% thumbnail comment.author.avatar "50x50" crop="center" as avatar %}
+                                        {% thumbnail comment.author.user_profile.avatar "50x50" crop="center" as avatar %}
                                             <img src="{{ avatar.url }}">
                                         {% endthumbnail %}
                                     </div>
@@ -75,11 +75,11 @@
             {% include 'components/nav.html' %}
         </div>
     </div>
-    {% if request.user == article.authors %}
-    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-        <a href="{% url 'blog:delete_article_confirm' article.pk %}"><button type="button" class="btn btn-danger">Delete</button></a>
-        <a href="{% url 'blog:article_edit' article.pk %}"><button type="button" class="btn btn-primary">Edit</button></a>
-    </div>
+    {% if request.user == article.author %}
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <a href="{% url 'blog:delete_article_confirm' article.slug %}"><button type="button" class="btn btn-danger">Delete</button></a>
+            <a href="{% url 'blog:article_edit' article.slug %}"><button type="button" class="btn btn-primary">Edit</button></a>
+        </div>
     {% endif %} 
 {% endblock content %}
 

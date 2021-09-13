@@ -12,7 +12,6 @@
                     {% endif %}
                     <h5><li><a {% if section == 'users' %}class="nav-link px-2 text-white" {% else %}class="nav-link px-2 text-secondary"
                         {% endif %} href="{% url 'user_account:profiles' %}" class="nav-link px-2 text-secondary">Users</a></li></h5>
-                    <h5><li><a href="#" class="nav-link px-2 text-secondary">About and Contact me</a></li></h5>
                 </ul>
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="get" action="{% url 'blog:article_search' %}">
                     <input type="" class="form-control" placeholder="Search articles" aria-label="Search" name="q">
@@ -20,7 +19,7 @@
                 <div class="text-end">
                     {% if section != 'login' %}
                         {% if request.user.is_authenticated %}
-                            <a class="btn btn-warning" href="{% url 'logout' %}">SignOut</a>
+                            <a class="btn btn-warning" href="{% url 'some' %}">SignOut</a>
                         {% else %}
                             <a class="btn btn-success" href="{% url 'signin' %}">SignIn</a>
                             <a href="{% url 'signup' %}" class="btn btn-warning">SignUp</a>

@@ -50,7 +50,7 @@
 				<br>
 				{% if request.user == user_profile.user %}
 					<div class="card">
-						<a href="{% url 'user_account:update_profile' request.user.username %}" class="btn btn-primary">Edit</a>
+						<a href="{% url 'user_account:update_profile' request.user.username %}" class="btn btn-primary">Update Profile</a>
 						<br>
 						<a href="{% url 'password_change' %}" class="btn btn-primary">Change password</a>
 					</div>
@@ -63,7 +63,7 @@
 									<h6 class="mb-0"><img src="https://img.icons8.com/ios-filled/30/000000/domain.png"/>Website</h6>
 									<span class="text-secondary">{{ link }}</span>	
 								</li>	
-								<a class="btn btn-danger">Delete link</a>	
+								<a href="{% url 'user_account:delete_soc_link' 'pers_website' %}" class="btn btn-danger">Delete link</a>	
 							{% else %}
 								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<h6 class="mb-0"><img src="https://img.icons8.com/ios-filled/30/000000/domain.png"/>Website</h6>
@@ -78,7 +78,7 @@
 									<h6 class="mb-0"><img src="https://img.icons8.com/fluency/30/000000/apple-mail.png"/>/>Mail</h6>
 									<span class="text-secondary">{{ link }}</span>	
 								</li>	
-								<a class="btn btn-danger">Delete link</a>	
+								<a href="{% url 'user_account:delete_soc_link' 'mail' %}" class="btn btn-danger">Delete link</a>	
 							{% else %}
 								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<h6 class="mb-0"><img src="https://img.icons8.com/fluency/30/000000/apple-mail.png"/>Mail</h6>
@@ -93,7 +93,7 @@
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/telegram-app--v3.png"/>Telegram</h6>
 									<span class="text-secondary">{{ link }}</span>
 								</li>
-								<a class="btn btn-danger">Delete link</a>
+								<a href="{% url 'user_account:delete_soc_link' 'telegram' %}" class="btn btn-danger">Delete link</a>
 							{% else %}
 								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/telegram-app--v3.png"/>Telegram</h6>
@@ -108,7 +108,7 @@
 									<h6 class="mb-0"><img src="https://img.icons8.com/windows/30/000000/github.png"/>Github</h6>
 									<span class="text-secondary">{{ link }}</span>
 								</li>
-								<a class="btn btn-danger">Delete link</a>
+								<a href="{% url 'user_account:delete_soc_link' 'git' %}" class="btn btn-danger">Delete link</a>
 							{% else %}
 								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<h6 class="mb-0"><img src="https://img.icons8.com/windows/30/000000/github.png"/>GitHub</h6>
@@ -123,7 +123,7 @@
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/linkedin.png"/>LinkedIn</h6>
 									<span class="text-secondary">{{ link }}</span>
 								</li>
-								<a class="btn btn-danger">Delete link</a>
+								<a href="{% url 'user_account:delete_soc_link' 'linkin' %}" class="btn btn-danger">Delete link</a>
 							{% else %}
 								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/linkedin.png"/>LinkedIn</h6>
@@ -138,7 +138,7 @@
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/twitter--v1.png"/>Twitter</h6>
 									<span class="text-secondary">{{ link }}</span>
 								</li>
-								<a class="btn btn-danger">Delete link</a>
+								<a href="{% url 'user_account:delete_soc_link' 'twitter' %}" class="btn btn-danger">Delete link</a>
 							{% else %}
 								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/twitter--v1.png"/>Twitter</h6>
@@ -153,7 +153,7 @@
 									<h6 class="mb-0"><img src="https://img.icons8.com/fluency/30/000000/instagram-new.png"/>Instagram</h6>
 									<span class="text-secondary">{{ link }}</span>
 								</li>
-								<a class="btn btn-danger">Delete link</a>
+								<a href="{% url 'user_account:delete_soc_link' 'insta' %}" class="btn btn-danger">Delete link</a>
 							{% else %}
 								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<h6 class="mb-0"><img src="https://img.icons8.com/fluency/30/000000/instagram-new.png"/>Instagram</h6>
@@ -168,7 +168,7 @@
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/facebook.png"/>Facebook</h6>
 									<span class="text-secondary">{{ link }}</span>
 								</li>
-								<a class="btn btn-danger">Delete link</a>
+								<a href="{% url 'user_account:delete_soc_link' 'facebook' %}" class="btn btn-danger">Delete link</a>
 							{% else %}
 								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/facebook.png"/>Facebook</h6>
@@ -183,7 +183,7 @@
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/vk-com.png"/>VKontakte</h6>
 									<span class="text-secondary">{{ link }}</span>
 								</li>
-								<a class="btn btn-danger">Delete link</a>
+								<a href="{% url 'user_account:delete_soc_link' 'vk' %}" class="btn btn-danger">Delete link</a>
 							{% else %}
 								<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<h6 class="mb-0"><img src="https://img.icons8.com/color/30/000000/vk-com.png"/>VKontakte</h6>
@@ -203,8 +203,10 @@
 					{% for article in last_two_articles %}
 					<div class="col-lg-6">
 						<div class="card mb-4">
-							<a href="{{ article.get_absolute_url }}"><img class="card-img-top"
+							{% if article.image %}
+								<a href="{{ article.get_absolute_url }}"><img class="card-img-top"
 									src="{{ article.image.url }}"></a>
+							{% endif %}
 							<div class="card-body">
 								<div class="small text-muted">{{ article.published|date:"f a l F Y" }}</div>
 								<h2 class="card-title h4">{{ article.title }}</h2>

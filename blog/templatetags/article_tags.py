@@ -1,21 +1,19 @@
 from django import template
-from blog.models import Category, Article
+from blog import models
 
 register = template.Library()
 
 
 @register.simple_tag
 def get_categories():
-    return Category.objects.all()
+    return models.Category.objects.all()
 
 
 @register.simple_tag
 def check_if_tags(article):
-    try:
-        tags = article.tags.all()
-        tags[0]
+    tags = article.tags.all()
+    if tags.exists():
         return True
-    except IndexError:
-        return False
+    return False
 
 
